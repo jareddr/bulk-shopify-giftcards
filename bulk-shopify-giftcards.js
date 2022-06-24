@@ -47,6 +47,11 @@ function parseCreditLine(line) {
   return { email, amount, note }
 }
 
+//take ugly codes, upper case and add a space ever 4 characters
+function formatCode(code) {
+  return code.toUpperCase().replace(/(.{4})/g, '$1 ')
+}
+
 async function createShopifyGiftcards(creditOperations) {
   const creditSummary = {}
 
@@ -76,7 +81,9 @@ async function createShopifyGiftcards(creditOperations) {
       //log new GC to file
       fs.appendFileSync(
         outFile,
-        `\n${email}, ${giftcard.initial_value}, ${giftcard.note}, ${giftcard.id}, ${giftcard.code}`,
+        `\n${email}, ${giftcard.initial_value}, ${giftcard.note}, ${
+          giftcard.id
+        }, ${formatCode(giftcard.code)}`,
       )
     } else {
       console.log(
