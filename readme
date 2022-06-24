@@ -38,3 +38,11 @@ Done!
 │  easter          │   30   │
 └──────────────────┴────────┘
 
+A new log file will be generated containing all the giftcard details including the codes
+
+> cat gift-cards.csv-1656109701560.log
+
+email, amount, note, giftcard_id, giftcard_code
+someemail1@email.com, 5.50, christmas, 123123123123, 1234 AAAA AAAA AAAA
+someemail2@email.com, 10.00, easter, 123123112234, 1234 BBBB BBBB BBBB 
+someemail3@email.com, 20.00, easter, 123123112345, 1234 CCCC CCCC CCCC 
