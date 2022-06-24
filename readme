@@ -1,0 +1,40 @@
+
+Usage: 
+node bulk-shopify-giftcards.js my-data.csv
+
+Where my-data.csv is of the form:
+ email <string>, amount <float>, note <string>
+
+ Example:
+someemail1@email.com, 5.50, christmas
+someemail2@email.com, 10.00, easter
+someemail3@email.com, 20.00, easter
+
+ The script will give you a summary of how many dollars of gift card will be created grouped by the note value.
+
+> node .\bulk-shopify-giftcards.js .\gift-cards.csv
+This script will generate [3] shopify gift cards for the following amounts:
+
+┌──────────────────┬────────┐
+│     (index)      │ Values │
+├──────────────────┼────────┤
+│  christmas       │  5.5   │
+│  easter          │   30   │
+└──────────────────┴────────┘
+Type BLING to proceed:
+
+
+The program will log all gift cards created and give you a post summary to compare against the input
+
+Here we go...
+Creating gift card for someemail1@email.com amt: 5.5 note: christmas
+Creating gift card for someemail2@email.com amt: 10 note: easter
+Creating gift card for someemail3@email.com amt: 20 note: easter
+Done!
+┌──────────────────┬────────┐
+│     (index)      │ Values │
+├──────────────────┼────────┤
+│  christmas       │  5.5   │
+│  easter          │   30   │
+└──────────────────┴────────┘
+
