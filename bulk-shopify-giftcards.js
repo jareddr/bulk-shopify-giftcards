@@ -60,6 +60,26 @@ async function createShopifyGiftcards(creditOperations) {
   for (let i = 0; i < creditOperations.length; i++) {
     const { email, amount, note } = parseCreditLine(creditOperations[i])
 
+    // look up shopify customer by email
+    const customerLookup = await shopify.customer.search({
+      query: `email:${email}`,
+      fields: 'id,email',
+      limit: 1,
+    })
+
+    //if we got an exact email match, use that customer id
+    let customerId =
+      customerLookup[0]?.email == email ? customerLookup[0]?.id : false
+    let customerObject = customerLookup[0]
+
+    //otherwise create a new customer using the email address
+    if (!customerId) {
+      const newCustomer = await shopify.customer.create({ email: email })
+      console.log('created new customer', email, `id: ${newCustomer.id}`)
+      customerId = newCustomer.id
+      customerObject = newCustomer
+    }
+
     console.log(`Creating gift card for ${email} amt: ${amount} note: ${note}`)
     let giftcard
     try {
@@ -67,6 +87,7 @@ async function createShopifyGiftcards(creditOperations) {
       giftcard = await shopify.giftCard.create({
         note: note,
         initial_value: amount,
+        customer_id: customerId,
       })
     } catch (e) {
       console.log('There was an error interacting with the api', e)
